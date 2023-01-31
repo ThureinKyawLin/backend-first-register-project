@@ -4,4 +4,4 @@ const fs = require("fs");
 //     console.log("Finished Writing File........")
 // })
 
-fs.writeFileSync("saTarPr.txt" , "Pyinn Lite trrr")
+fs.writeFileSync("saTarPr.txt", "Pyinn Lite trrr");

@@ -17,16 +17,13 @@
 
 .margin-bot {
   margin-bottom: 20px;
-
 }
 
 .display {
   justify-content: center;
   display: flex;
   flex-wrap: wrap;
-  
 }
 
 .editCardController {
-
 }

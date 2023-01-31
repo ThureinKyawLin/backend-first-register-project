@@ -6,6 +6,7 @@ const mainDisplay = document.querySelector(".mainDisplay");
 const formContainer = document.querySelector(".form-container");
 const secondFormContainer = document.querySelector(".secondFormContainer");
 
+const date = new Date();
 let allUsersInfo = null;
 
 const getAllUsers = async () => {
@@ -18,15 +19,19 @@ const getAllUsers = async () => {
     let div = document.createElement("div");
     div.classList.add("editCardController", "d-block");
     div.innerHTML = `
-        <div class="card m-4 " style="width: 18rem;">
-          <div class="card-body" style="height : 190px">
-            <h5>Name - ${user.name}</h5>
-            <h5>Email - ${user.email}</h5>
-            <h5>Password - ${user.pw}</h5>
+        <div class="card m-4 " style="width: 20rem;">
+          <div class="card-body d-flex flex-column " style="height : 220px">
+            <div class="">
+              <h5>Name - ${user.name}</h5>
+              <h5>Email - ${user.email}</h5>
+              <h5>Password - ${user.pw}</h5>
+              <h6 class="createdTime">Created Time - ${user.createdAt}</h6>
+              <h6 class="updatedTime">Updated Time - ${user.updatedAt}</h6>
+            </div>
 
-            <div class=" mt-3 d-flex justify-content-end">
-              <button class="btn btn-sm btn-primary edit" data-bs-toggle="modal" data-bs-target="#staticBackdrop" data-name="${user.name}" data-email="${user.email}" data-pw="${user.pw}">Edit</button>
-              <button class="btn btn-sm btn-danger delete" data-email="${user.email}">Delete</button>
+            <div class=" d-flex justify-content-end mt-auto">
+              <button class="btn btn-sm btn-primary edit align-self-end me-2" data-bs-toggle="modal" data-bs-target="#staticBackdrop" data-name="${user.name}" data-email="${user.email}" data-pw="${user.pw}" data-create="${user.createdAt}" data-update="${user.updatedAt}">Edit</button>
+              <button class="btn btn-sm btn-danger delete align-self-end" data-email="${user.email}">Delete</button>
             </div>
           </div>
           
@@ -38,12 +43,12 @@ const getAllUsers = async () => {
 
   const edits = document.querySelectorAll(".edit");
 
-  const editProcess = async (name, email, pw) => {
+  const editProcess = async (name, email, pw, updatedAt) => {
     const response = await fetch(url, {
       method: "PUT",
-      body: JSON.stringify({ name, email, pw }),
+      body: JSON.stringify({ name, email, pw, updatedAt }),
     });
-    const data = await response.json()
+    const data = await response.json();
   };
 
   edits.forEach((edit) => {
@@ -51,6 +56,8 @@ const getAllUsers = async () => {
       const editName = document.querySelector(".editName");
       const editEmail = document.querySelector(".editEmail");
       const editPassword = document.querySelector(".editPassword");
+      const updatedTime = document.querySelector(".updatedTime");
+
       console.log(edit.dataset);
       const { name, email, pw } = edit.dataset;
 
@@ -58,11 +65,16 @@ const getAllUsers = async () => {
       editEmail.value = email;
       editPassword.value = pw;
 
+      // let timeUpdate = edit.dataset.update;
+      // console.log(timeUpdate)
+
       const updateEdit = document.getElementById("updateEdit");
 
       updateEdit.addEventListener("click", () => {
         console.log(editName.value, editEmail.value, editPassword.value);
         editProcess(editName.value, editEmail.value, editPassword.value);
+        // updatedTime.textContent = timeUpdate;
+        updatedTime.innerHTML = `<h6>Updated Time - ${date.toLocaleDateString()} ${date.toLocaleTimeString()}</h6>`;
 
         const newModal = document.querySelector(".newModal");
         console.log(bootstrap);
@@ -75,30 +87,20 @@ const getAllUsers = async () => {
   const deleteBtns = document.querySelectorAll(".delete");
 
   const deleteProcess = async (email) => {
-    const response = await fetch(url , {
-      method : "DELETE",
-      body : JSON.stringify({email})
-    })      
-
-  
-  }
+    const response = await fetch(url, {
+      method: "DELETE",
+      body: JSON.stringify({ email }),
+    });
+  };
 
   deleteBtns.forEach((deleteBtn) => {
-    
-    deleteBtn.addEventListener("click" , () => {
+    deleteBtn.addEventListener("click", () => {
+      const deleteWithEmail = deleteBtn.dataset.email;
+      console.log(deleteWithEmail);
 
-      const deleteWithEmail = deleteBtn.dataset.email
-      console.log(deleteWithEmail)
-
-
-      deleteProcess(deleteWithEmail)
-    } )
-  })
-  
-
-
-
-
+      deleteProcess(deleteWithEmail);
+    });
+  });
 };
 getAllUsers();
 
@@ -108,6 +110,7 @@ register.addEventListener("click", (e) => {
   const registerEmail = document.querySelector(".email");
   const registerName = document.querySelector(".name");
   const registerPassword = document.querySelector(".password");
+  const createdTime = document.querySelector(".updatedTime");
 
   if (
     registerName.value === "" ||
@@ -121,12 +124,15 @@ register.addEventListener("click", (e) => {
   const name = registerName.value;
   const email = registerEmail.value;
   const pw = registerPassword.value;
+  createdTime.innerHTML = `<h6>${date.toLocaleDateString()} ${date.toLocaleTimeString()}</h6>`;
+  const createdAt = `${date.toLocaleDateString()} ${date.toLocaleTimeString()}`;
+  const updatedAt = `${date.toLocaleDateString()} ${date.toLocaleTimeString()}`;
 
   const registerUser = async () => {
     const url = "http://localhost:3000/users";
     const response = await fetch(url, {
       method: "POST",
-      body: JSON.stringify({ name, email, pw }),
+      body: JSON.stringify({ name, email, pw, createdAt, updatedAt }),
     });
     let data = await response.json();
     console.log(data);
@@ -141,14 +147,6 @@ register.addEventListener("click", (e) => {
     location.reload();
   }, 500);
 });
-
-
-
-
-
-
-
-
 
 // const handleFileUpload = async () => {
 //   const inputUploadFile = document.querySelector('#inputUploadFile');

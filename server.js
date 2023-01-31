@@ -41,10 +41,29 @@
 
 const fs = require("fs");
 const http = require("http");
+const date = new Date();
 let allUsers = [
-  { name: "trkl", email: "trkl@gmail.com", pw: "ttttttt" },
-  { name: "aung aung", email: "aungaung@gmail.com", pw: "aungaung" },
-  { name: "kyaw kyaw", email: "kyawkyaw@gmail.com", pw: "kyawkyaw" },
+  {
+    name: "trkl",
+    email: "trkl@gmail.com",
+    pw: "ttttttt",
+    createdAt: `${date.toLocaleDateString()} ${date.toLocaleTimeString()}`,
+    updatedAt: `${date.toLocaleDateString()} ${date.toLocaleTimeString()}`,
+  },
+  {
+    name: "aung aung",
+    email: "aungaung@gmail.com",
+    pw: "aungaung",
+    createdAt: `${date.toLocaleDateString()} ${date.toLocaleTimeString()}`,
+    updatedAt: `${date.toLocaleDateString()} ${date.toLocaleTimeString()}`,
+  },
+  {
+    name: "kyaw kyaw",
+    email: "kyawkyaw@gmail.com",
+    pw: "kyawkyaw",
+    createdAt: `${date.toLocaleDateString()} ${date.toLocaleTimeString()}`,
+    updatedAt: `${date.toLocaleDateString()} ${date.toLocaleTimeString()}`,
+  },
 ];
 
 const server = http.createServer((req, res) => {
@@ -72,7 +91,7 @@ const server = http.createServer((req, res) => {
     if (method === "GET") {
       res.writeHead(200, { "Content-Type": "application/json" });
       res.write(JSON.stringify(allUsers));
-      
+
       return res.end();
     } else if (method === "POST") {
       let data = "";
@@ -81,13 +100,12 @@ const server = http.createServer((req, res) => {
       });
 
       req.on("end", () => {
-        
         const newUser = JSON.parse(data);
-        console.log(newUser)
+        console.log(newUser);
         allUsers.push(newUser);
         console.log(allUsers);
         res.writeHead(200, { "Content-Type": "application/json" });
-        res.write(JSON.stringify({allUsers , status : "success"}));
+        res.write(JSON.stringify({ allUsers, status: "success" }));
         res.end();
       });
     } else if (method === "PUT") {
@@ -100,15 +118,19 @@ const server = http.createServer((req, res) => {
         const chgDataToJson = JSON.parse(data);
 
         const isSameEmail = allUsers.find((user) => {
-          console.log(chgDataToJson)
+          // console.log(chgDataToJson);
           return user.email === chgDataToJson.email;
         });
         const newName = chgDataToJson.name;
         const newPw = chgDataToJson.pw;
+        const updateTime = chgDataToJson.updatedAt;
 
         if (isSameEmail) {
           isSameEmail.name = newName;
           isSameEmail.pw = newPw;
+          isSameEmail.updatedAt = `${new Date().toLocaleDateString()} ${new Date().toLocaleTimeString()}`;
+
+          console.log(isSameEmail);
           res.writeHead(200, { "Content-Type": "application/json" });
           res.write(JSON.stringify(allUsers));
         }
@@ -121,34 +143,31 @@ const server = http.createServer((req, res) => {
         data += chunk;
       });
 
-        req.on("end", () => {
+      req.on("end", () => {
         const chgDataToJson = JSON.parse(data);
 
         allUsers = allUsers.filter((user) => {
-
-          return user.email !== chgDataToJson.email; 
+          return user.email !== chgDataToJson.email;
         });
-   
 
         res.writeHead(200, { "Content-Type": "application/json" });
-        res.write(JSON.stringify(allUsers , {status : "noDelete"}));
-         
+        res.write(JSON.stringify(allUsers, { status: "noDelete" }));
+
         // if (isSameEmail) {
         //   const deleteUser = allUsers.splice(index, index);
         //   res.writeHead(200, { "Content-Type": "application/json" });
-        //   res.write(JSON.stringify(allUsers)); 
+        //   res.write(JSON.stringify(allUsers));
         // }
-        console.log(allUsers)
-        res.end(); 
+        console.log(allUsers);
+        res.end();
       });
     }
-  }else if (req.url === "/fileUpload") {
-  
+  } else if (req.url === "/fileUpload") {
     const writeStream = fs.createWriteStream("image.jpg");
     req.pipe(writeStream);
-    res.writeHead(200, {"Content-Type" : "application/json"});
-    res.write(JSON.stringify({massage : "Upload Success....."}));
-    res.end()
+    res.writeHead(200, { "Content-Type": "application/json" });
+    res.write(JSON.stringify({ massage: "Upload Success....." }));
+    res.end();
 
     // let data = "";
     // req.on("data" , (chunk) => {
@@ -170,5 +189,3 @@ const server = http.createServer((req, res) => {
 server.listen(3000, () => {
   console.log("Server started : Listening on port 3000");
 });
-
-

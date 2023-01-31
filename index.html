@@ -20,7 +20,6 @@
   </head>
   <body>
     <div class="container">
-     
       <div class="mainDisplay d-block">
         <div class="form-container">
           <label
@@ -65,22 +64,17 @@
 
           <hr />
 
-          <button
-            type="button"
-            class="btn btn-primary register"
-          >
+          <button type="button" class="btn btn-primary register">
             Register
           </button>
-          
         </div>
       </div>
       <div class="secondFormContainer d-none"></div>
       <div id="showUserContainer" class="display mt-auto"></div>
     </div>
-    
-    
+
     <div>
-      <input type="file" accept="image/*,video/*" id="inputUploadFile">
+      <input type="file" accept="image/*,video/*" id="inputUploadFile" />
       <button onclick="handleFileUpload()">UpLoadFile</button>
     </div>
 
@@ -88,10 +82,17 @@
   </body>
 </html>
 
-<div class="modal fade newModal" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+<div
+  class="modal fade newModal"
+  id="staticBackdrop"
+  data-bs-backdrop="static"
+  data-bs-keyboard="false"
+  tabindex="-1"
+  aria-labelledby="staticBackdropLabel"
+  aria-hidden="true"
+>
   <div class="modal-dialog">
     <div class="modal-content">
-      
       <div class="form-container">
         <label
           for="exampleFormControlInput1"
@@ -135,8 +136,12 @@
       </div>
 
       <div class="modal-footer">
-        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary" id="updateEdit">Update</button>
+        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">
+          Close
+        </button>
+        <button type="button" class="btn btn-primary" id="updateEdit">
+          Update
+        </button>
       </div>
     </div>
   </div>
