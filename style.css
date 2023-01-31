@@ -1,0 +1,32 @@
+.container {
+  background-color: aqua;
+  width: 75%;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.form-container {
+  width: 50%;
+  margin: auto;
+}
+
+.margin-top {
+  margin-top: 20px;
+}
+
+.margin-bot {
+  margin-bottom: 20px;
+
+}
+
+.display {
+  justify-content: center;
+  display: flex;
+  flex-wrap: wrap;
+  
+}
+
+.editCardController {
+
+}
