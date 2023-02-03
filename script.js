@@ -10,7 +10,7 @@ const date = new Date();
 let allUsersInfo = null;
 
 const getAllUsers = async () => {
-  const url = "http://localhost:3000/users";
+  const url = "http://backendtest-bkyo.onrender/users";
   const response = await fetch(url);
   let users = await response.json();
   allUsersInfo = users;
@@ -129,7 +129,7 @@ register.addEventListener("click", (e) => {
   const updatedAt = `${date.toLocaleDateString()} ${date.toLocaleTimeString()}`;
 
   const registerUser = async () => {
-    const url = "http://localhost:3000/users";
+    const url = "http://backendtest-bkyo.onrender/users";
     const response = await fetch(url, {
       method: "POST",
       body: JSON.stringify({ name, email, pw, createdAt, updatedAt }),
@@ -148,12 +148,12 @@ register.addEventListener("click", (e) => {
   }, 500);
 });
 
-// const handleFileUpload = async () => {
-//   const inputUploadFile = document.querySelector('#inputUploadFile');
-//   console.log(inputUploadFile.files)
-//   const response = await fetch("http://localhost:3000/fileUpload", {
-//     method : "POST",
-//     body : inputUploadFile.files[0],
-//   });
-//   console.log(await response.json())
-// }
+const handleFileUpload = async () => {
+  const inputUploadFile = document.querySelector('#inputUploadFile');
+  console.log(inputUploadFile.files)
+  const response = await fetch("http://backendtest-bkyo.onrender/fileUpload", {
+    method : "POST",
+    body : inputUploadFile.files[0],
+  });
+  console.log(await response.json())
+}
