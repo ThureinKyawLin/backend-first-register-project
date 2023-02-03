@@ -10,7 +10,7 @@ const date = new Date();
 let allUsersInfo = null;
 
 const getAllUsers = async () => {
-  const url = "http://backendtest-0h91.onrende/users";
+  const url = "https://backendtest-0h91.onrende/users";
   const response = await fetch(url);
   let users = await response.json();
   allUsersInfo = users;
@@ -129,7 +129,7 @@ register.addEventListener("click", (e) => {
   const updatedAt = `${date.toLocaleDateString()} ${date.toLocaleTimeString()}`;
 
   const registerUser = async () => {
-    const url = "http://backendtest-0h91.onrende/users";
+    const url = "https://backendtest-0h91.onrende/users";
     const response = await fetch(url, {
       method: "POST",
       body: JSON.stringify({ name, email, pw, createdAt, updatedAt }),
@@ -151,7 +151,7 @@ register.addEventListener("click", (e) => {
 const handleFileUpload = async () => {
   const inputUploadFile = document.querySelector('#inputUploadFile');
   console.log(inputUploadFile.files)
-  const response = await fetch("http://backendtest-0h91.onrende/fileUpload", {
+  const response = await fetch("https://backendtest-0h91.onrende/fileUpload", {
     method : "POST",
     body : inputUploadFile.files[0],
   });
